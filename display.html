@@ -39,6 +39,7 @@
     }
     .status.delayed { color: #e74c3c; }
     .status.cancelled { color: #f1c40f; }
+    .status.custom { color: #3498db; }
   </style>
 </head>
 <body>
@@ -52,16 +53,29 @@
   <script>
     function updateDisplay() {
       const data = JSON.parse(localStorage.getItem('flightData') || '{}');
-      document.getElementById('flightInfo').textContent = `Flight ${data.flight || '—'} to ${data.destination || '—'}`;
-      document.getElementById('gateInfo').textContent = `Gate ${data.gate || '—'} — ${data.time || '—'}`;
-      const statusEl = document.getElementById('statusInfo');
-      statusEl.textContent = data.status || '—';
-      statusEl.className = 'status';
-      if ((data.status || '').toLowerCase().includes('delay')) statusEl.classList.add('delayed');
-      if ((data.status || '').toLowerCase().includes('cancel')) statusEl.classList.add('cancelled');
+      const flightInfo = document.getElementById('flightInfo');
+      const gateInfo = document.getElementById('gateInfo');
+      const statusInfo = document.getElementById('statusInfo');
+
+      flightInfo.textContent = `Flight ${data.flight || '—'} to ${data.destination || '—'}`;
+      gateInfo.textContent = `Gate ${data.gate || '—'} — ${data.time || '—'}`;
+
+      const status = data.status || '—';
+      statusInfo.textContent = status;
+      statusInfo.className = 'status'; // Reset classes
+
+      const statusText = status.toLowerCase();
+      if (statusText.includes('delayed')) {
+        statusInfo.classList.add('delayed');
+      } else if (statusText.includes('cancelled') || statusText.includes('canceled')) {
+        statusInfo.classList.add('cancelled');
+      } else {
+        statusInfo.classList.add('custom'); // Treat anything else as custom
+      }
     }
+
     updateDisplay();
-    setInterval(updateDisplay, 1000);
+    setInterval(updateDisplay, 1000); // Optional: refresh every second
   </script>
 </body>
 </html>
