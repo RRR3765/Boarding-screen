@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Elego Airways Control Panel</title>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      background: #0a0a0a;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px;
+      max-width: 600px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      font-size: 16px;
+      background: #1c1c1c;
+      color: white;
+      border: 1px solid #333;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
+      background: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #229954;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+  <h1>✈️ Elego Control Panel</h1>
+
+  <label>Flight Number</label>
+  <input id="flight" placeholder="e.g. EG204" />
+
+  <label>Destination</label>
+  <input id="destination" placeholder="e.g. London (LHR)" />
+
+  <label>Gate</label>
+  <input id="gate" placeholder="e.g. C4" />
+
+  <label>Time</label>
+  <input id="time" placeholder="e.g. 9:45 AM" />
+
+  <label>Status</label>
+  <select id="status">
+    <option>On Time</option>
+    <option>Boarding Now - Group 1</option>
+    <option>Boarding Now - Group 2</option>
+    <option>Final Call</option>
+    <option>Delayed</option>
+    <option>Cancelled</option>
+  </select>
+
+  <button onclick="update()">Update Display</button>
+
+  <script>
+    function update() {
+      const data = {
+        flight: document.getElementById('flight').value,
+        destination: document.getElementById('destination').value,
+        gate: document.getElementById('gate').value,
+        time: document.getElementById('time').value,
+        status: document.getElementById('status').value
+      };
+      localStorage.setItem('flightData', JSON.stringify(data));
+      alert("Display updated! Open display.html to see it.");
+    }
+  </script>
+</body>
+</html>
